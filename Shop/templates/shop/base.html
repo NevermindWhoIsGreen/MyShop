@@ -6,14 +6,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/../../static/img/../../static/css/style.css' %}">
 </head>
 <body>
 
 <div class="jumbotron">
   <div class="container text-center">
-    <h1 class="main_av">Автозапчасти</h1>
-    <p class="main_av">Оригинальные запчасти, автохимия, аксессуары и другое</p>
+{#    <h1 class="main_av">Автозапчасти</h1>#}
+{#    <p class="main_av">Оригинальные запчасти, автохимия, аксессуары и другое</p>#}
   </div>
 </div>
 
@@ -44,22 +44,10 @@
 </nav>
 
 <div class="container">
-    <div class="row">
-    <div class="col-sm-8">
-      <div class="panel panel-primary">
-        <div class="panel-heading">Cars</div>
-        <div class="panel-body"><h3> Сортировка по моделям</h3></div>
-        <div class="panel-footer">Cars</div>
-      </div>
-    </div>
-  </div>
-</div><br>
-
-<div class="container">
     {% block content %}{% endblock %}
 </div><br><br>
 
-<footer class="container-fluid text-center">
+<footer class="footer">
   <p>Footer</p>
 </footer>
 

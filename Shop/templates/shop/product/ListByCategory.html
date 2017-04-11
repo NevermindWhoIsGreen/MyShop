@@ -1,14 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>List By Category</title>
-    <h1>Welcome to real world BITCH!</h1>
-</head>
-<body>
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load mptt_tags %}
 
-</body>
-<footer>
-    footer
-</footer>
-</html>
+{% block title %}
+{#  {% if category %} {{ category.name }} {% else %} Каталог {% endif %}#}
+Страница товаров
+{% endblock %}
+
+
+{% block content %}
+  <div id="sidebar" class="col-sm-3">
+    <a href="{{ category.parent.get_absolute_url }}"><h2>Here</h2></a>
+    <h3>Elasticsearch</h3>
+{#    <ul>#}
+{#      <li {% if not category %} class="selected" {% endif %}>#}
+{#        <a href="{% url "shop:ProductList" %}">Все</a>#}
+{#      </li>#}
+{#      {% for cat in categories %}#}
+{#        <li {% if category.slug == cat.slug %} class="selected" {% endif %}>#}
+{#        <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>#}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}
+  </div>
+
+  <div id="main" class="product_list col-sm-9">
+    <h1>{{ category.name }}</h1>
+    <div class="items row">
+      {% for product in products %}
+        <div class="item col-sm-4">
+          <a href="{{ product.get_absolute_url }}">
+            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.png"%}{% endif %}" class="img-responsive">
+          </a>
+          <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+          {{ product.price }} грн.
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

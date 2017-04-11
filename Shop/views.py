@@ -1,32 +1,38 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from .models import Category, Product
+from cart.forms import CartAddProductForm
 
-# Страница с товарами
+
+# Страница каталога
 def ProductList(request, category_slug=None):
     category = None
     catChilds = None
     categories = Category.objects.get(id=34)
     categories = categories.get_children()
-    products = Product.objects.filter(available=True)
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         catChilds = category.get_children()
-        # products = products.filter(category=category)
     return render(request, 'shop/product/list.html', {
         'category': category,
         'categories': categories,
         'catChilds':catChilds,
     })
 
-# Страница товара
-def ProductDetail(request, id, slug):
-    product = get_object_or_404(Product, id=id, slug=slug, available=True)
-    return render(request, 'shop/product/detail.html', {'product': product})
 
+#Страница товаров по категории
 def ProductListByCategory(request, categoryMain_slug, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
-    products = Product.objects.filter(available=True)
+    products = Product.objects.filter(available=True, category=category)
     return render(request, 'shop/product/ListByCategory.html', {
         'category' : category,
         'products' : products
     })
+
+
+# Страница товара
+def ProductDetail(request, parent_slug, category_slug, id):
+    product = get_object_or_404(Product, id=id, available=True)
+    return render(request, 'shop/product/detail.html', {'product': product})
+
+
+

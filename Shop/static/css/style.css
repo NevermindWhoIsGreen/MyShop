@@ -114,18 +114,25 @@ thead{
 }
 
     /* Remove the navbar's default rounded borders and increase the bottom margin */
-    .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
+.navbar {
+    margin-bottom: 50px;
+    border-radius: 0;
+}
 
-    /* Remove the jumbotron's default bottom margin */
-     .jumbotron {
-      margin-bottom: 0;
-    }
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+    padding-top:200px;
+    margin-bottom: 0;
+    background-image: url('../img/0.jpg');
+}
 
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f1f2e3;
-      padding: 25px;
-    }
+/* Add a gray background color and some padding to the footer */
+footer {
+    background-color: #282828;
+    margin-bottom: 0;
+    height: 200px;
+}
+.img-responsive{
+    height: 300px;
+    width: 225px;
+}
