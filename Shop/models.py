@@ -20,7 +20,7 @@ class Category(MPTTModel):
         return self.name
 
     class MPTTMeta:
-        order_insertion_py = ['name']
+        order_insertion_by = ['name']
 
     def get_absolute_url(self):
         return reverse('shop:CategoryList', args=[self.slug])

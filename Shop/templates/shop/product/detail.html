@@ -3,22 +3,28 @@
 {% load mptt_tags %}
 
 {% block title %}
-  {{ product.name }}
+    {{ product.name }}
 {% endblock %}
 {% block content %}
-  <div class="product-detail">
-    <div class="col-sm-4">
-      <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.png"%}{% endif %}" class="img-responsive">
-    </div>
-    <div class="col-sm-8">
-      <h1>{{ product.name }}</h1>
-      <h2><a href="{{ product.category.get_absolute_url_with_parent }}">{{ product.category }}</a></h2>
-      <p class="price">
-        {{ product.price }} руб.
-      </p>
-      <span>
-        {{ product.description | linebreaks}}
+    <div class="product-detail">
+        <div class="col-sm-4">
+            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.png" %}{% endif %}"
+                 class="img-responsive">
+        </div>
+        <div class="col-sm-8">
+            <h1>{{ product.name }}</h1>
+            <h2><a href="{{ product.category.get_absolute_url_with_parent }}">{{ product.category }}</a></h2>
+            <p class="price">
+                {{ product.price }} грн.
+            </p>
+            <form action="{% url "cart:CartAdd" product.id %}" method="post">
+                {{ cart_product_form }}
+                {% csrf_token %}
+                <input type="submit" value="Добавить в корзину">
+            </form>
+            <span>
+        {{ product.description | linebreaks }}
       </span>
+        </div>
     </div>
-  </div>
 {% endblock %}

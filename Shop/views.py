@@ -32,7 +32,10 @@ def ProductListByCategory(request, categoryMain_slug, category_slug):
 # Страница товара
 def ProductDetail(request, parent_slug, category_slug, id):
     product = get_object_or_404(Product, id=id, available=True)
-    return render(request, 'shop/product/detail.html', {'product': product})
+    cart_product_form = CartAddProductForm()
+    return render(request, 'shop/product/detail.html', {'product': product,
+                                                        'cart_product_form': cart_product_form
+                                                        })
 
 
 

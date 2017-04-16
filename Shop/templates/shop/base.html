@@ -37,7 +37,17 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Вход </a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина </a></li>
+        <li>
+            {% with total_items=cart|length %}
+                {% if cart|length > 0 %}
+                    <a href="{% url "cart:CartDetail" %}"><span class="glyphicon glyphicon-shopping-cart"></span>
+                    {{ total_items }} тов. {{ cart.get_total_price }} руб.
+                    </a>
+                {% else %}
+                    <a href="{% url "cart:CartDetail" %}"><span class="glyphicon glyphicon-shopping-cart"></span> Корзина пустая</a>
+                {% endif %}
+            {% endwith %}
+        </li>
       </ul>
     </div>
   </div>
