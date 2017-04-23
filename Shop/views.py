@@ -7,7 +7,7 @@ from cart.forms import CartAddProductForm
 def ProductList(request, category_slug=None):
     category = None
     catChilds = None
-    categories = Category.objects.get(id=34)
+    categories = Category.objects.get(id=1)
     categories = categories.get_children()
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)

@@ -71,7 +71,7 @@ form.add label{
   border-radius: 3px;
 }
 form.add input[type="submit"]{
-  background: #2a6496;
+  background: #333;
   border-radius: 3px;
   border: 0;
   padding: 5px 10px;
@@ -88,15 +88,15 @@ th, td{
   padding: 5px;
 }
 thead{
-  background: #2a6496;
+  background: #333;
   color: white;
 }
 .btn{
-  background: #2a6496;
+  background: #333;
   color: white;
 }
 .btn-light{
-  background: #808080;
+  background: #333;
 }
 .order-info h2{
   margin-bottom: 20px;
@@ -121,16 +121,24 @@ thead{
 
 /* Remove the jumbotron's default bottom margin */
 .jumbotron {
-    padding-top:200px;
+    padding-top:100px;
+    color:white;
     margin-bottom: 0;
     background-image: url('../img/0.jpg');
 }
 
 /* Add a gray background color and some padding to the footer */
 footer {
-    background-color: #282828;
-    margin-bottom: 0;
-    height: 200px;
+    margin-bottom:-10px;
+    position: fixed; /* Фиксированное положение */
+    left: 0; bottom: 0; /* Левый нижний угол */
+    padding: 30px; /* Поля вокруг текста */
+    background: #333; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    width: 200%; /* Ширина слоя */
+}
+.container-padding{
+    padding-bottom:100px;
 }
 .img-responsive{
     height: 300px;
