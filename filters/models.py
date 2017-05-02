@@ -25,6 +25,19 @@ class FilterCategory(OrderingBaseModel):
         verbose_name_plural = _('Filters Category')
 
 
+class FilterCar(OrderingBaseModel):
+    category = models.ForeignKey('Shop.Car', on_delete=models.CASCADE,
+                                 related_name='filtercar', verbose_name =_('Car'))
+    slug = models.CharField(_("Slug"), default="", unique=True, max_length=250)
+    name = models.CharField(_("Name"), default="", max_length=250)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Filter Car')
+        verbose_name_plural = _('Filters Car')
+
 
 class FilterSelect(OrderingBaseModel):
     filter_category = models.ForeignKey(FilterCategory, on_delete=models.CASCADE,

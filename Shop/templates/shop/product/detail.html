@@ -7,13 +7,31 @@
 {% endblock %}
 {% block content %}
     <div class="product-detail">
+
         <div class="col-sm-4">
             <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.png" %}{% endif %}"
                  class="img-responsive">
         </div>
+
         <div class="col-sm-8">
             <h1>{{ product.name }}</h1>
             <h2><a href="{{ product.category.get_absolute_url_with_parent }}">{{ product.category }}</a></h2>
+
+            <div class="item col-sm-4">
+                {% for cat_prop in category_property %}
+                    <p>{{ cat_prop.name }} </p>
+                {% endfor %}
+            </div>
+            <div class="item col-sm-4">
+                {% for product_prop in product_property %}
+                    <p>{{ product_prop }} </p>
+                {% endfor %}
+            </div>
+            <div>
+                {{ product.description | linebreaks }}
+            </div>
+
+
             <p class="price">
                 {{ product.price }} грн.
             </p>
@@ -22,9 +40,7 @@
                 {% csrf_token %}
                 <input type="submit" value="Добавить в корзину">
             </form>
-            <span>
-        {{ product.description | linebreaks }}
-      </span>
+
         </div>
     </div>
 {% endblock %}

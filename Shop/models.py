@@ -37,9 +37,35 @@ class Category(MPTTModel, OrderingBaseModel):
         return reverse('shop:ProductListByCategory', args=[self.parent.slug, self.slug])
 
 
+# Модель машины
+class Car(MPTTModel, OrderingBaseModel):
+    slug = models.CharField(_("Slug"), default="", unique=True, max_length=250)
+    name = models.CharField(_("Name"), default="", max_length=250)
+    title = models.CharField(_("Title"), blank=True, default="", max_length=250)
+    description = models.TextField(_("Description"), blank=True, default="", max_length=250)
+    keywords = models.CharField(_("Keywords"), blank=True, default="", max_length=250)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', verbose_name=_('Parent'))
+
+    class Meta:
+        verbose_name = _('Car')
+        verbose_name_plural = _('Cars')
+
+    class MPTTMeta:
+        order_insertion_by = ['created_at']
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('shop:CategoryList', args=[self.slug])
+
+
 # Модель продукта
 class Product(OrderingBaseModel):
-    category = TreeForeignKey(Category, on_delete=models.CASCADE, related_name='categories', blank=True, null=True, verbose_name=_('Category'))
+    category = TreeForeignKey(Category, on_delete=models.CASCADE, related_name='categories', blank=True, null=True,
+                              verbose_name=_('Category'))
+    car = TreeForeignKey(Car, on_delete=models.CASCADE, related_name='cars', blank=True, null=True,
+                         verbose_name=_('Car'))
     name = models.CharField(max_length=200, db_index=True, verbose_name="Название")
     slug = models.SlugField(max_length=200, db_index=True)
     image = models.ImageField(upload_to='products/%Y/%m/%d/', blank=True, verbose_name="Изображение товара")
@@ -70,6 +96,7 @@ class Product(OrderingBaseModel):
                     pf = ProductFilter(filter_category=fc, product=self)
                     pf.save()
 
+
     class Meta:
         ordering = ['name']
         index_together = [
@@ -85,19 +112,10 @@ class Product(OrderingBaseModel):
 
 # Модель предложений
 class Offer(OrderingBaseModel):
-    product = models.ForeignKey(Product,
-                                on_delete=models.CASCADE,
-                                related_name='offers',
-                                null=True,
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='offers', null=True,
                                 verbose_name=_('Product'))
-    name = models.CharField(_("Name"),
-                            default="",
-                            max_length=250)
-    price = models.DecimalField(max_digits=8,
-                                decimal_places=2,
-                                null=True,
-                                default=0.00,
-                                verbose_name=_('Price'))
+    name = models.CharField(_("Name"), default="", max_length=250)
+    price = models.DecimalField(max_digits=8, decimal_places=2, null=True, default=0.00, verbose_name=_('Price'))
 
     def __str__(self):
         return self.name

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Offer
+from .models import Category, Product, Offer, Car
 from mptt.admin import MPTTModelAdmin
 from properties.models import CategoryProperty, ProductProperty
 from filters.models import FilterCategory, ProductFilter, FilterSelect
@@ -91,6 +91,36 @@ class CategoryAdmin(MPTTModelAdmin):
             'slug': ('name',)
         }
 
+# Модель машины
+@admin.register(Car)
+class CarAdmin(MPTTModelAdmin):
+    # inlines = [FilterCategoryInline, ]
+    suit_form_tabs = (('general', 'General'),
+                      # ('params', 'Params'),
+                      # ('filters', 'Filters')
+                      )
+    fieldsets = [
+        ('General', {
+            'classes': ('suit-tab', 'suit-tab-general',),
+            'fields': [
+                'name',
+                'slug',
+                'title',
+                'description',
+                'keywords',
+                'parent',
+            ]
+        }),
+    ]
+
+
+    def get_prepopulated_fields(self, request, obj=None):
+        # can't use `prepopulated_fields = ..` because it breaks the admin validation
+        # for translated fields. This is the official django-parler workaround.
+        return {
+            'slug': ('name',)
+        }
+
 
 # Модель товара
 @admin.register(Product)
@@ -104,7 +134,9 @@ class ProductAdmin(admin.ModelAdmin):
                       ('offers', 'Offers'),
                       ('params', 'Params'),
                       ('filters', 'Filters'),
-                      ('images', 'Images'),)
+                      # ('images', 'Images'),
+                      # ('car','Cars'),
+                      )
     fieldsets = [
         ('General', {
             'classes': ('suit-tab', 'suit-tab-general',),
@@ -114,7 +146,11 @@ class ProductAdmin(admin.ModelAdmin):
                        'keywords',
                        'image',
                        'category',
-                       'price', ]
+                       'car',
+                       'price',
+                       'stock',
+                       'available'
+                       ]
         }),
     ]
 

@@ -147,6 +147,7 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(PROJECT_PATH,  "media")
 
+CART_SESSION_ID = 'cart'
 
 SHOP_IMAGE_DIR = 'shop'
 
