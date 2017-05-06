@@ -37,7 +37,7 @@ def ProductListByCategory(request, categoryMain_slug, category_slug):
         'category' : category,
         'products' : products,
         'category_filters' : category_filters,
-        'filters_select':filters_select,
+        'filters_select' : filters_select,
     })
 
 
@@ -46,11 +46,13 @@ def ProductDetail(request, parent_slug, category_slug, id):
     product = get_object_or_404(Product, id=id, available=True)
     category_property = CategoryProperty.objects.filter(category=product.category)
     product_property = ProductProperty.objects.filter(product=product)
+    desc_list = zip(category_property,product_property)
     cart_product_form = CartAddProductForm()
     return render(request, 'shop/product/detail.html', {'product': product,
                                                         'category_property': category_property,
                                                         'product_property':product_property,
-                                                        'cart_product_form': cart_product_form
+                                                        'cart_product_form': cart_product_form,
+                                                        'desc_list' : desc_list,
                                                         })
 
 

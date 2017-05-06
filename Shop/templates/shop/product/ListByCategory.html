@@ -17,13 +17,18 @@
             {% for filter in category_filters %}
                 <p>===============</p>
                 <p>{{ filter }}:</p>
+                <form>
+                 <p><select name="select" >
+                 <option selected value="#"></option>
                 {% for key,filter_select in  filters_select.items %}
                     {% if key == filter %}
                         {% for fltr_slt in filter_select %}
-                            <p>{{fltr_slt}}</p>
+                            <option value="{{fltr_slt}}">{{fltr_slt}}</option>
                         {% endfor %}
                     {% endif %}
                 {% endfor %}
+                 </select>
+                 </form>
             {% endfor %}
         </div>
     </div>

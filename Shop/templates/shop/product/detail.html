@@ -12,35 +12,52 @@
             <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.png" %}{% endif %}"
                  class="img-responsive">
         </div>
-
         <div class="col-sm-8">
             <h1>{{ product.name }}</h1>
-            <h2><a href="{{ product.category.get_absolute_url_with_parent }}">{{ product.category }}</a></h2>
+        </div>
+        <div class="container">
 
-            <div class="item col-sm-4">
-                {% for cat_prop in category_property %}
-                    <p>{{ cat_prop.name }} </p>
-                {% endfor %}
+            <div class="col-sm-8">
+                <h2><a href="{{ product.category.get_absolute_url_with_parent }}">{{ product.category }}</a></h2>
+
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#home">Параметры</a></li>
+                    <li><a data-toggle="tab" href="#menu1">Описание</a></li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <div id="home" class="tab-pane fade in active">
+                        <h3>Параметры</h3>
+
+                        <div class="col-sm-offset-0 col-sm-6">
+                        <dl class="dl-horizontal">
+                            {% for first,second in desc_list %}
+                                <dt><span>{{ first }}</span></dt><dd>{{ second }} </dd>
+                            {% endfor %}
+                        </dl>
+                        </div>
+                    </div>
+                    <div id="menu1" class="tab-pane fade">
+                        <h3>Описание</h3>
+                        <div>
+                            {{ product.description | linebreaks }}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="item col-sm-4">
-                {% for product_prop in product_property %}
-                    <p>{{ product_prop }} </p>
-                {% endfor %}
+            <div class="col-sm-offset-4 col-sm-4">
+
+                <p class="price">
+                    {{ product.price }} грн.
+                </p>
+                <form action="{% url "cart:CartAdd" product.id %}" method="post">
+                    {{ cart_product_form }}
+                    {% csrf_token %}
+                    <input type="submit" value="Добавить в корзину">
+                </form>
             </div>
-            <div>
-                {{ product.description | linebreaks }}
-            </div>
-
-
-            <p class="price">
-                {{ product.price }} грн.
-            </p>
-            <form action="{% url "cart:CartAdd" product.id %}" method="post">
-                {{ cart_product_form }}
-                {% csrf_token %}
-                <input type="submit" value="Добавить в корзину">
-            </form>
-
         </div>
     </div>
 {% endblock %}
