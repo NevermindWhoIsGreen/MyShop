@@ -3,48 +3,88 @@
 {% load mptt_tags %}
 
 {% block title %}
-{#  {% if category %} {{ category.name }} {% else %} Каталог {% endif %}#}
-Страница товаров
+    {#  {% if category %} {{ category.name }} {% else %} Каталог {% endif %}#}
+    Страница товаров
 {% endblock %}
 
 
 {% block content %}
-
     <div id="sidebar" class="col-sm-3">
         <a href="{{ category.parent.get_absolute_url }}"><h2>Here</h2></a>
-        <h3>Elastic search</h3>
-        <div class="item col-sm-2">
+        {#        <div class="item col-sm-2">#}
+        {#            {% for filter in category_filters %}#}
+        {#                <p>===============</p>#}
+        {#                <p>{{ filter }}:</p>#}
+        {#                <form>#}
+        {#                 <p><select name="select" >#}
+        {#                 <option selected value="#"></option>#}
+        {#                {% for key,filter_select in  filters_select.items %}#}
+        {#                    {% if key == filter %}#}
+        {#                        {% for fltr_slt in filter_select %}#}
+        {#                            <option value="{{fltr_slt}}">{{fltr_slt}}</option>#}
+        {#                        {% endfor %}#}
+        {#                    {% endif %}#}
+        {#                {% endfor %}#}
+        {#                 </select>#}
+        {#                 </form>#}
+        {#            {% endfor %}#}
+        {#        </div>#}
+        <div class="geke-filter">
+
             {% for filter in category_filters %}
-                <p>===============</p>
-                <p>{{ filter }}:</p>
-                <form>
-                 <p><select name="select" >
-                 <option selected value="#"></option>
-                {% for key,filter_select in  filters_select.items %}
-                    {% if key == filter %}
-                        {% for fltr_slt in filter_select %}
-                            <option value="{{fltr_slt}}">{{fltr_slt}}</option>
-                        {% endfor %}
+                <form action="">
+                    <div class="geke-filter-item"
+                         data='{"name":"{{ filter.slug }}", "type":"list", "min":"", "max":"", "value":""}'>
+                        <h5>{{ filter }}:</h5>
+                        <ul>
+                            {% for key,filter_select in  filters_select.items %}
+                                {% if key == filter %}
+                                    {% for fltr_slt in filter_select %}
+                                        <li data-id="{{ fltr_slt.slug }}">{{ fltr_slt }}</li>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        <input type="hidden" value="" name="{{ filter.slug }}" class="geke-values"/>
+                    </div>
+                </form>
+            {% endfor %}
+
+        </div>
+
+
+    </div>
+
+    <div id="main" class="product_list col-sm-9">
+        <h1>{{ category.name }}</h1>
+        <div class="items row">
+            {% for product in products %}
+                {% if filtered_products %}
+                    {% if product.id in filtered_products %}
+                        <div class="item col-sm-4">
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="
+
+                                        {% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.png" %}{% endif %}"
+                                     class="img-responsive">
+                            </a>
+                            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                            {{ product.price }} грн.
+                        </div>
                     {% endif %}
-                {% endfor %}
-                 </select>
-                 </form>
+                {% else %}
+                    <div class="item col-sm-4">
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="
+
+                                    {% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.png" %}{% endif %}"
+                                 class="img-responsive">
+                        </a>
+                        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                        {{ product.price }} грн.
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
-
-  <div id="main" class="product_list col-sm-9">
-    <h1>{{ category.name }}</h1>
-    <div class="items row">
-      {% for product in products %}
-        <div class="item col-sm-4">
-            <a href="{{ product.get_absolute_url }}">
-                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.png" %}{% endif %}" class="img-responsive">
-            </a>
-          <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
-          {{ product.price }} грн.
-        </div>
-      {% endfor %}
-    </div>
-  </div>
 {% endblock %}

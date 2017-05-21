@@ -53,7 +53,6 @@ class FilterSelect(OrderingBaseModel):
         verbose_name_plural = _('Filters Select')
 
 
-
 class ProductFilter(OrderingBaseModel):
     product = models.ForeignKey('Shop.Product', on_delete=models.CASCADE,
                                 related_name='filterproducts', null=True, verbose_name =_('Product'))

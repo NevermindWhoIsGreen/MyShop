@@ -1,0 +1,8 @@
+{% block search %}
+{% if products.count > 0 %}
+    {% for product in products %}
+        <p><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></p>
+        <p>{{ product.price }}</p>
+    {% endfor %}
+{% endif %}
+{% endblock%}

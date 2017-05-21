@@ -3,7 +3,7 @@ from .models import Category, Product, Car
 from cart.forms import CartAddProductForm
 from properties.models import ProductProperty, CategoryProperty
 from filters.models import ProductFilter, FilterCategory, FilterSelect
-
+from django.db.models import Q
 
 # Страница каталога
 def ProductList(request, category_slug=None):
@@ -26,8 +26,27 @@ def ProductList(request, category_slug=None):
 
 # Страница товаров по категории
 def ProductListByCategory(request, categoryMain_slug, category_slug):
+    FF = request.GET
+    target=[]
+    for key, value in FF.items():
+        k = value.split('|')
+        for i in k:
+            target.append(i)
+
     category = get_object_or_404(Category, slug=category_slug)
     category_filters = FilterCategory.objects.filter(category=category)
+
+    product_filter = []
+    for k in target:
+        product_filter.append(FilterSelect.objects.get(slug=k))
+
+    filtered_products = []
+    for k in product_filter:
+        test=ProductFilter.objects.filter(values=k)
+        for i in test.values():
+            filtered_products.append(i['product_id'])
+    filtered_products=set(filtered_products)
+
     filters_select = {}
     for filter in category_filters:
         filter_select = FilterSelect.objects.filter(filter_category=filter)
@@ -38,6 +57,8 @@ def ProductListByCategory(request, categoryMain_slug, category_slug):
         'products' : products,
         'category_filters' : category_filters,
         'filters_select' : filters_select,
+        'product_filter' : product_filter,
+        'filtered_products' : filtered_products,
     })
 
 
@@ -55,5 +76,16 @@ def ProductDetail(request, parent_slug, category_slug, id):
                                                         'desc_list' : desc_list,
                                                         })
 
+# Поиск товаров
+def search_product(request):
+    if request.method == 'POST':
+        search_query = request.POST['search_query']
+    else:
+        search_query = ''
 
+    products = Product.objects.filter(Q(name__icontains=search_query))
 
+    content = {}
+    content['products'] = products
+
+    return render(request, 'shop/product/search_result.html', content)

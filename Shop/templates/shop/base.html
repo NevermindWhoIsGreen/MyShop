@@ -7,18 +7,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="{% static 'css/../../static/img/../../static/css/style.css' %}">
-{#  <script src="{%  static 'js/js.js'%}"></script>#}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 </head>
 <body>
 
-<div class="jumbotron">
-  <div class="container text-center">
-    <h1 class="main_av">Автозапчасти</h1>
-    <p class="main_av">Оригинальные запчасти, автохимия, аксессуары и другое</p>
-  </div>
-</div>
+{#<div class="jumbotron">#}
+{#  <div class="container text-center">#}
+{#    <h1 class="main_av">Автозапчасти</h1>#}
+{#    <p class="main_av">Оригинальные запчасти, автохимия, аксессуары и другое</p>#}
+{#  </div>#}
+{#</div>#}
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -38,12 +38,30 @@
         <li><a href="#">Заказ Услуги</a></li>
         <li><a href="#">О нас</a></li>
       </ul>
+
+{#        {% block search %}#}
+{##}
+{#            {% csrf_token %}#}
+{#            <input name="search" id="search">#}
+{##}
+{#            <div id="main-search-found">#}
+{#                <!-- here the search result is paste -->#}
+{#            </div>#}
+{#        {% endblock %}#}
+
      <form class="navbar-form navbar-left">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+            {% block search %}
+            {% csrf_token %}
+          <input type="text" class="form-control" placeholder="Search" name="search" id="search">
+                       <div id="main-search-found">
+                <!-- here the search result is paste -->
+            </div>
+            {% endblock %}
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
+
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Вход </a></li>
         <li>
@@ -63,6 +81,8 @@
 </nav>
 
 <div class="container container-padding">
+
+
     {% block content %}{% endblock %}
 </div><br><br>
 
