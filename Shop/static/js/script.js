@@ -27,7 +27,8 @@
 
         var filter = $('.geke-filter');
 
-        $(filter).append('<div class="geke-filter-reset"><a href="" title="Сбросить" class="geke-filter-reset">Сбросить все настройки</a></div>').find('.geke-filter-item').each(function(){
+        $(filter).append('<div class="geke-filter-reset"><a href="" title="Сбросить" class="geke-filter-reset">' +
+            'Сбросить все настройки</a></div>').find('.geke-filter-item').each(function(){
             initFilterItem.call(this);
         });
         $(filter).each(function(){
@@ -253,7 +254,7 @@ $(function(){
         if (_this.val().length >= 3) {
             $.ajax({
                 type: "POST",
-                url: "/search/",
+                url: "/ajax_search/",
                 data: {
                     'search_query': $('#search').val(),
                     'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()

@@ -3,32 +3,14 @@
 {% load mptt_tags %}
 
 {% block title %}
-    {#  {% if category %} {{ category.name }} {% else %} Каталог {% endif %}#}
     Страница товаров
 {% endblock %}
 
 
 {% block content %}
+    <h1>{{ search_query }}</h1>
     <div id="sidebar" class="col-sm-3">
-        <a href="{{ category.parent.get_absolute_url }}"><h2>Here</h2></a>
-        {#        <div class="item col-sm-2">#}
-        {#            {% for filter in category_filters %}#}
-        {#                <p>===============</p>#}
-        {#                <p>{{ filter }}:</p>#}
-        {#                <form>#}
-        {#                 <p><select name="select" >#}
-        {#                 <option selected value="#"></option>#}
-        {#                {% for key,filter_select in  filters_select.items %}#}
-        {#                    {% if key == filter %}#}
-        {#                        {% for fltr_slt in filter_select %}#}
-        {#                            <option value="{{fltr_slt}}">{{fltr_slt}}</option>#}
-        {#                        {% endfor %}#}
-        {#                    {% endif %}#}
-        {#                {% endfor %}#}
-        {#                 </select>#}
-        {#                 </form>#}
-        {#            {% endfor %}#}
-        {#        </div>#}
+
         <div class="geke-filter">
 
             {% for filter in category_filters %}
@@ -59,32 +41,39 @@
         <h1>{{ category.name }}</h1>
         <div class="items row">
             {% for product in products %}
-                {% if filtered_products %}
-                    {% if product.id in filtered_products %}
-                        <div class="item col-sm-4">
-                            <a href="{{ product.get_absolute_url }}">
-                                <img src="
-
-                                        {% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.png" %}{% endif %}"
-                                     class="img-responsive">
-                            </a>
-                            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
-                            {{ product.price }} грн.
-                        </div>
-                    {% endif %}
-                {% else %}
-                    <div class="item col-sm-4">
-                        <a href="{{ product.get_absolute_url }}">
-                            <img src="
-
-                                    {% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.png" %}{% endif %}"
-                                 class="img-responsive">
-                        </a>
-                        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
-                        {{ product.price }} грн.
-                    </div>
-                {% endif %}
+                <div class="item col-sm-4">
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="
+                                {% if product.image %}
+                                    {{ product.image.url }}
+                                {% else %}
+                                    {% static "img/no-image.png" %}
+                                {% endif %}"
+                             class="img-responsive">
+                    </a>
+                    <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                    {{ product.price }} грн.
+                </div>
             {% endfor %}
+        </div>
+        <div class="pagination">
+    <span class="step-links">
+        {% if products.has_previous %}
+            <a href="?page={{ products.previous_page_number }}{{ search_request }}"><-</a>
+        {% endif %}
+
+        {% for num in products.paginator.page_range %}
+            {% if num == articles.number %}
+                <span class="current"><b>{{ num }}</b></span>
+            {% else %}
+                <a href="?page={{ num }}{{ search_request }}"> {{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}{{ search_request }}">-></a>
+        {% endif %}
+    </span>
         </div>
     </div>
 {% endblock %}

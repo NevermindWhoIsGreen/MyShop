@@ -171,7 +171,7 @@ margin: 40px auto;
     z-index:10;
     width:15px;
     height:15px;
-    background:url(cancel-button.png) center center no-repeat;
+    background:url('img/cancel-cross.png') center center no-repeat;
     text-decoration:none;
     display:none;
 }
@@ -211,7 +211,7 @@ margin: 40px auto;
     vertical-align:middle;
 }
 .geke-filter-item ul li.active span{
-    background:#da2031 url(list-selected.png) center center no-repeat;
+    background:#da2031 url('img/list-selected.png') center center no-repeat;
     border:1px solid #da2031;
 }
 .geke-filter-item.list li{
@@ -347,7 +347,7 @@ margin: 40px auto;
     position:absolute;
     width:13px;
     z-index:2;
-    background:url(slider.png) top center no-repeat;
+    background:url('img/slider.png') top center no-repeat;
     margin:-4px 0 0 -7px;
     cursor: pointer;
 }
@@ -361,4 +361,8 @@ margin: 40px auto;
     background-color: white;
     position: absolute;
     z-index: 9999;
+}
+
+#search{
+    width: 420px;
 }
