@@ -62,7 +62,7 @@ def ProductListByCategory(request,categoryMain_slug, category_slug):
         filtered_products =[]
         for product in products:
             if product.id in filtered_products_id:
-                filtered_products.append(k)
+                filtered_products.append(product)
 
         products = filtered_products
 
@@ -138,3 +138,10 @@ def ajax_search(request):
     content['products'] = products
 
     return render(request, 'shop/product/search_result.html', content)
+
+
+def car(request, car):
+    car = car
+    return render(request, 'shop/car/ModelList.html', {
+        'car': car,
+    })

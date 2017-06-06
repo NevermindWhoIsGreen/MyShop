@@ -57,7 +57,7 @@ class Car(MPTTModel, OrderingBaseModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('shop:CategoryList', args=[self.slug])
+        return reverse('shop:ModelList', args=[self.slug])
 
 
 # Модель продукта
